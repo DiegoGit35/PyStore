@@ -2,19 +2,19 @@ from sqlmodel import SQLModel, Field
 
 
 class Product(SQLModel, table=True):
-    id: int = Field(default=None, primary_key=True)
-    title: str
-    description: str
-    price: int
+    id:             int = Field(default=None, primary_key=True)
+    title:          str
+    description:    str
+    price:          int
     discount_percentage: int
-    rating: int
-    stock: int
-    brand: str
-    thumbnail: str
-    images: str
-    is_published: bool
-    created_at: str
-    category_id: int | None = Field (default = None, foreign_key = "categories.id")
+    rating:         int
+    stock:          int
+    brand:          str
+    thumbnail:      str
+    images:         str
+    is_published:   bool
+    created_at:     str
+    category_id:    int | None = Field (default = None, foreign_key = "categories.id")
 
 
     class Config:

@@ -1,20 +1,21 @@
 from fastapi import APIRouter, Path, HTTPException, status
 from models.users import User 
+from repository.user_repository import UserRepository
 
 user_router = APIRouter()
 
-users = []
+user_repo = UserRepository()
+# users_list = []
 
 @user_router.get("/users", status_code=200)
 async def get_users() -> dict:
-    return{
-        "users": "Get all users"
-    }
-
+    response = user_repo.get_all()
+    return response
 
 @user_router.post("/users", status_code= 201)
 async def add(user: User) -> dict:
-    users.append(user)
+    UserRepository.create(user)
+    # users_list.append(user)
     return {
         "message": "Create user"
     }
