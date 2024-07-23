@@ -1,7 +1,8 @@
 from sqlmodel import SQLModel, Field
+from typing import Optional
 
 class CartItems(SQLModel, table = True):
-    id:         int | None = Field(default = None, primary_key = True)
+    id:         Optional[int] | None = Field(default = None, primary_key = True, nullable=False)
     cart_id:    int | None = Field(default = None, foreign_key = "cart.id")
     product_id: int | None = Field(default = None, foreign_key = "product.id")
     quantity:   int

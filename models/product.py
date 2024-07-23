@@ -1,8 +1,9 @@
 from sqlmodel import SQLModel, Field
+from typing import Optional
 
 
 class Product(SQLModel, table=True):
-    id:             int = Field(default=None, primary_key=True)
+    id:             Optional[int] = Field(default=None, primary_key=True, nullable=False)
     title:          str
     description:    str
     price:          int

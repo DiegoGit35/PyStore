@@ -1,25 +1,26 @@
-from typing import List, TypeVar
-from abc import ABC, abstractclassmethod
+from typing import List, TypeVar, Generic, Optional
+from abc import ABC, abstractmethod
+from sqlmodel import SQLModel
 
-T = TypeVar('T')
+T = TypeVar('T', bound=SQLModel)
 
-class IRepository(ABC):
-    @abstractclassmethod
+class IRepository(ABC, Generic[T]):
+    @abstractmethod
     def get_all(self) -> List[T]:
         pass
 
-    @abstractclassmethod
-    def get_by_id(self, id: int) -> T:
+    @abstractmethod
+    def get_by_id(self, id: int) -> Optional[T]:
         pass
 
-    @abstractclassmethod
+    @abstractmethod
     def create(self, entity: T) -> T:
         pass
 
-    @abstractclassmethod
+    @abstractmethod
     def update(self, entity: T) -> T:
         pass
 
-    @abstractclassmethod
+    @abstractmethod
     def delete(self, entity: T) -> T:
         pass

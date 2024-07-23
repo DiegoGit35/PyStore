@@ -1,7 +1,8 @@
 from sqlmodel import SQLModel, Field
+from typing import Optional
 
 class Cart(SQLModel, table= True):
-    id:             int | None = Field(default=None, primary_key = True)
+    id:             Optional[int] | None = Field(default=None, primary_key = True, nullable=False)
     user_id:        int | None = Field(default = None, foreign_key = "user.id")
     created_at:     str
     total_amount:   float

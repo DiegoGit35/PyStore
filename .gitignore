@@ -1,1 +1,2 @@
-/mivenv/
+/.mivenv/
+/__pycache__/
