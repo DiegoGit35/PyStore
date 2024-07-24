@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Path, HTTPException, status, Depends
 from sqlmodel import Session
-from models.users import User 
+from models.users import User, UserUpdate
 from repository.i_repository import IRepository
 from repository.user_repository import UserRepository
 from database.connection    import get_session
@@ -26,19 +26,17 @@ def add(user: User, repo: IRepository[User] = Depends(get_user_repository)):
 
 
 @user_router.get("/users/{user_id}")
-def get_user(user_id: int, repo: IRepository[User] = Depends(get_user_repository)) -> dict:
+def get_user(user_id: int, repo: IRepository[User] = Depends(get_user_repository)):
     return  repo.get_by_id(user_id)
 
 
 @user_router.put("/users/{user_id}", status_code=200)
-def update_user(user_id: int, updated_user: User) -> dict:
-    return {
-            "message": "User updated successfully"
-            }
+def update_user(*, user_id: int, updated_user: UserUpdate, repo: IRepository[User] = Depends(get_user_repository)):
+    return repo.update(user_id, updated_user)
 
 
 @user_router.delete("/users/{user_id}")
-def delete_user(user_id: int) -> dict:
+def delete_user(user_id: int):
       return {
             "message": "User deleted successfully"
             }

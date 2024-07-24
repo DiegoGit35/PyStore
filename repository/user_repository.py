@@ -1,10 +1,9 @@
 # from database.connection import engine
-from sqlmodel               import Field, Session, SQLModel, create_engine, select
-from typing                 import List
-from fastapi                import Depends
-from sqlmodel import Session, select
-from models.users           import User
-from .i_repository          import IRepository
+from typing         import List
+from fastapi        import Depends, HTTPException
+from sqlmodel       import Field, Session, SQLModel, create_engine, select
+from models.users   import User, UserUpdate
+from .i_repository  import IRepository
 
 # from services.item_service import ItemService  # Asegúrate de importar correctamente la clase Item
 # from entities.item import Item
@@ -27,9 +26,18 @@ class UserRepository(IRepository[User]):
         self.session.refresh(user)
         return user
 
-    def update(self, user: User) -> User:
-        # Implementar la lógica para actualizar
-        pass
+    def update(self, id_user: int, user: UserUpdate) -> User:
+
+        db_user = self.session.get(User, id_user)
+        if not db_user:
+            raise HTTPException(status_code=404, detail="User not found")
+        user_data = user.model_dump(exclude_unset=True)
+        for key, value in user_data.items():
+            setattr(db_user, key, value)
+        self.session.add(db_user)
+        self.session.commit()
+        self.session.refresh(db_user)
+        return db_user
 
     def delete(self, user: User) -> User:
         # Implementar la lógica para eliminar
