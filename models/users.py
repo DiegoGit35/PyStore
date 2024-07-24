@@ -1,4 +1,5 @@
 from sqlmodel import SQLModel, Field
+from pydantic import BaseModel
 from typing import Optional
 
 class User(SQLModel, table=True):
@@ -23,3 +24,10 @@ class User(SQLModel, table=True):
                 'role' : "admin"
             }
         }
+class UserUpdate(BaseModel):
+    username: str 
+    email: str 
+    password: str 
+    full_name: str
+   
+   
