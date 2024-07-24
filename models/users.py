@@ -8,7 +8,7 @@ class User(SQLModel, table=True):
     email:      str
     password:   str
     full_name:  str
-    is_active:  bool
+    is_active:  bool = Field(default=True, nullable=False)
     created_at: str
     role:       str
 

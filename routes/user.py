@@ -36,7 +36,5 @@ def update_user(*, user_id: int, updated_user: UserUpdate, repo: IRepository[Use
 
 
 @user_router.delete("/users/{user_id}")
-def delete_user(user_id: int):
-      return {
-            "message": "User deleted successfully"
-            }
+def delete_user(user_id: int, repo: IRepository[User] = Depends(get_user_repository)):
+      return repo.delete(user_id)

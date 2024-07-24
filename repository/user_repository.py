@@ -39,6 +39,12 @@ class UserRepository(IRepository[User]):
         self.session.refresh(db_user)
         return db_user
 
-    def delete(self, user: User) -> User:
-        # Implementar la lógica para eliminar
-        pass
+    def delete(self, user_id: int) -> User:
+        user = self.session.get(User, user_id)
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        user.is_active = False
+        self.session.add(user)
+        self.session.commit()
+        self.session.refresh(user)
+        return user

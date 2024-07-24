@@ -22,5 +22,5 @@ class IRepository(ABC, Generic[T]):
         pass
 
     @abstractmethod
-    def delete(self, entity: T) -> T:
+    def delete(self, id: int) -> T:
         pass
